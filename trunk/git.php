@@ -131,7 +131,9 @@
         $repo = get_repo_path($proj);
         $out = array();
         exec("GIT_DIR=$repo git-diff $parent $commit", &$out);
+        echo "<div class=\"gitcode\">\n";
         echo highlight_code(implode("\n",$out));
+        echo "</div>\n";
     }
 
     function html_tree($proj, $tree)   {
@@ -162,8 +164,9 @@
             $date = date("D n/j/y G:i", $c['date']);
             $cid = $c['commit_id'];
             $pid = $c['parent'];
+            $mess = short_desc($c['message'], 110);
             $diff = "<a href=\"{$_SERVER['SCRIPT_NAME']}?p={$_GET['p']}&a=commitdiff&h=$cid&hb=$pid\">commitdiff</a>";
-            echo "<tr><td>$date</td><td>{$c['author']}</td><td>{$c['message']}</td><td>$diff</td></tr>\n"; 
+            echo "<tr><td>$date</td><td>{$c['author']}</td><td>$mess</td><td>$diff</td></tr>\n"; 
             $c = git_commit($repo, $c["parent"]);
         }
         echo "</table>\n";
@@ -465,12 +468,12 @@
         }
     }
 
-    function short_desc($desc)  {
+    function short_desc($desc, $size=25)  {
         $trunc = false;
         $short = "";
         $d = explode(" ", $desc);
         foreach ($d as $str)    {
-            if (strlen($short) < 25)
+            if (strlen($short) < $size)
                 $short .= "$str ";
             else    {
                 $trunc = true;
