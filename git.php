@@ -173,7 +173,7 @@
         echo "<table>\n";
         $c = git_commit($repo, "HEAD");
         for ($i = 0; $i < $count && $c; $i++)  {
-            $date = date("D n/j/y G:i", $c['date']);
+            $date = date("D n/j/y G:i", (int)$c['date']);
             $cid = $c['commit_id'];
             $pid = $c['parent'];
             $mess = short_desc($c['message'], 110);
@@ -303,7 +303,7 @@
     function get_last($repo)    {
         $out = array();
         $date = exec("GIT_DIR=$repo git-rev-list  --header --max-count=1 HEAD | grep -a committer | cut -f5-6 -d' '", &$out);
-        return date("D n/j/y G:i", $date);
+        return date("D n/j/y G:i", (int)$date);
     }
 
     function get_project_link($repo, $type = false)    {
