@@ -30,7 +30,7 @@
 
     $title  = "git";
     $repo_index = "index.aux";
-    $repo_directory = "git repository directory here";
+    $repo_directory = "/home/jirwin/git/";
 
     //repos could be made by an embeder script
     if (!is_array($repos))
@@ -41,10 +41,17 @@
         foreach ($r as $repo)
             $repos[] = trim($repo);
     }
-    else if((file_exits($repo_directory)) && (is_dir($repo_directory))){
-        $repos = scandir($repo_directory);
+    else if((file_exists($repo_directory)) && (is_dir($repo_directory))){
+        if ($handle = opendir($repo_directory)) {
+            while (false !== ($file = readdir($handle))) {
+                if ($file != "." && $file != "..") {
+                    $repos[] = trim($repo_directory . $file);
+                }
+            }
+            closedir($handle);
+        } 
     }
-    else    
+    else{    
         $repos = array(
             "/home/zack/scm/bartel.git",
             "/home/zack/scm/rpminfo.git",
@@ -57,6 +64,7 @@
             "/home/zack/scm/git-php.git",
             "/home/zack/scm/gobot.git",
         );
+    }
 
     if (!isset($git_embed) && $git_embed != true)
         $git_embed = false;
