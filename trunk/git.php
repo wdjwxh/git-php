@@ -30,6 +30,7 @@
 
     $title  = "git";
     $repo_index = "index.aux";
+    $repo_directory = "git repository directory here";
 
     //repos could be made by an embeder script
     if (!is_array($repos))
@@ -39,6 +40,9 @@
         $r = file($repo_index);
         foreach ($r as $repo)
             $repos[] = trim($repo);
+    }
+    else if((file_exits($repo_directory)) && (is_dir($repo_directory))){
+        $repos = scandir($repo_directory);
     }
     else    
         $repos = array(
