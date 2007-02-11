@@ -472,6 +472,8 @@
         $proj = $_GET['p'];
         $repo = get_repo_path($proj);
         $link = "http://{$_SERVER['HTTP_HOST']}".sanitized_url()."p=$proj";
+        $c = git_commit($repo, "HEAD");
+
         header("Content-type: text/xml", true);
         
         echo '<?xml version="1.0" encoding="UTF-8"?>';
@@ -487,15 +489,14 @@
             <title><?php echo $proj ?></title>
             <link><?php echo $link ?></link>
             <description><?php echo $proj ?></description>
-            <pubDate>Sat, 26 Aug 2006 20:33:59 +0000</pubDate>
+            <pubDate><?php echo date('D, d M Y G:i:s', $c['date'])?></pubDate>
             <generator>http://code.google.com/p/git-php/</generator>
             <language>en</language>
-            <?php $c = git_commit($repo, "HEAD");
-                 for ($i = 0; $i < 10 && $c; $i++):?>
+            <?php for ($i = 0; $i < 10 && $c; $i++): ?>
             <item>
                 <title><?php echo $c['message']?></title>
                 <link><?php echo $link?></link>
-                <pubDate>Thu, 27 Jul 2006 05:14:09 +0000</pubDate>
+                <pubDate><?php echo date('D, d M Y G:i:s', $c['date'])?></pubDate>
                 <guid isPermaLink="false"><?php echo $link ?></guid>
                 <description><?php echo $c['message'] ?></description>
                 <content><?php echo $c['message'] ?></content>
@@ -503,7 +504,6 @@
             <?php $c = git_commit($repo, $c['parent']);
                   endfor;
             ?>
-            }
         </channel>
         </rss>
         <?php
