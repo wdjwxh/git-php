@@ -146,8 +146,8 @@
         exec("GIT_DIR=$repo git-cat-file blob $blob", &$out);
         echo "<div class=\"gitcode\">\n";
         echo highlight_code(implode("\n",$out));
+        // highlight_string(implode("\n",$out));
         echo "</div>\n";
-            //highlight_string(implode("\n",$out));
     }
 
     function html_diff($proj, $commit, $parent)    {
@@ -279,7 +279,7 @@
         }
 
         if ($git_logo)    {
-            echo "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\"" . 
+            echo "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\">" . 
                  "<img src=\"".sanitized_url()."dl=git_logo\" style=\"border-width: 0px;\"/></a>\n";
         }
 
