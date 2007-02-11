@@ -131,9 +131,9 @@
                 $tree = $_GET['t'];
             else 
                 $tree = "HEAD";
+             html_tree($proj, $tree); 
         }
 
-        html_tree($proj, $tree); 
     }
 
     function html_blob($proj, $blob)    {
@@ -398,7 +398,7 @@
         }
 
         /* the GET vars used by git-php */
-        $git_get = array('p', 'dl', 'b', 'a', 'h');
+        $git_get = array('p', 'dl', 'b', 'a', 'h', 't');
 
 
         foreach ($_GET as $var => $val) {
@@ -554,7 +554,6 @@
         if (isset($_GET['b']))
             $crumb .= "blob";
 
-        /* TODO: Is this used? */
         if (isset($_GET['t']))
             $crumb .= "tree";
 
