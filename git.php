@@ -145,7 +145,8 @@
         echo "<div style=\"float:right;padding:7px;\">$plain</div>\n";
         exec("GIT_DIR=$repo git-cat-file blob $blob", &$out);
         echo "<div class=\"gitcode\">\n";
-        echo highlight_code(implode("\n",$out));
+        echo highlight(implode("\n", $out));
+        //echo highlight_code(implode("\n",$out));
         // highlight_string(implode("\n",$out));
         echo "</div>\n";
     }
@@ -578,6 +579,23 @@
 
     function zpr ($arr) {
         print "<pre>" .print_r($arr, true). "</pre>";
+    }
+
+    function highlight($code) {
+
+        if (substr($code, 0,2) != '<?')    {
+            $code = "<?\n$code\n?>";
+            $add_tags = true;
+        }
+        $code = highlight_string($code,1);
+
+        if ($add_tags)  {
+            //$code = substr($code, 0, 26).substr($code, 36, (strlen($code) - 74));
+            $code = substr($code, 83, strlen($code) - 140);    
+            $code.="</span>";
+        }
+
+        return $code;
     }
 
     function highlight_code($code) {
