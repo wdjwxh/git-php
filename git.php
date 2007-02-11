@@ -343,13 +343,16 @@
         $commit["parent"] = $g[1];
 
         $g = explode(" ", $out[3]);
-        $commit["author"] = "{$g[1]} {$g[2]}";
-//TODO: Dudes with 3+ names
-        
-        $commit["date"] = "{$g[4]} {$g[5]}";
+        /* variable number of strings for the name */
+        for ($i = 1; $g[$i][0] != '<' && $i < 5; $i++)   {
+            $commit["author"] .= "{$g[$i]} ";
+        }
+
+        /* add the email */
+        $commit["date"] = "{$g[++$i]} {$g[++$i]}";
         $commit["message"] = "";
         $size = count($out);
-        for ($i = 6; $i < $size; $i++)
+        for (; $i < $size-1; $i++)
             $commit["message"] .= $out[$i];
         return $commit;
     }
