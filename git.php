@@ -415,7 +415,7 @@
         foreach ($_GET as $var => $val) {
             if (!in_array($var, $git_get))   {
                 $get[$var] = $val;
-                $url.="$var=$val&";
+                $url.="$var=$val&amp;";
             }
         }
         return $url;
