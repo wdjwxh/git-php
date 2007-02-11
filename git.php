@@ -75,6 +75,8 @@
             "/home/zack/scm/hello-servlet.git",
         );
 
+    sort($repos);
+
     if (!isset($git_embed) && $git_embed != true)
         $git_embed = false;
 
@@ -236,6 +238,10 @@
             echo "</head>\n";
             echo "<body>\n";
         }
+        /* Add rss2 link */
+        if (isset($_GET['p']))  {
+            echo "<link rel=\"alternate\" title=\"{$_GET['p']}\" href=\"".sanitized_url()."p={$_GET['p']}&dl=rss2\" type=\"application/rss+xml\" />\n";
+        }
         echo "<div id=\"gitbody\">\n";
         
     }
@@ -268,6 +274,10 @@
 
         echo "<div class=\"gitfooter\">\n";
 
+        if (isset($_GET['p']))  {
+            echo "<a class=\"rss_logo\" href=\"".sanitized_url()."p={$_GET['p']}&dl=rss2\" >RSS</a>\n";
+        }
+
         if ($git_logo)    {
             echo "<a href=\"http://www.kernel.org/pub/software/scm/git/docs/\"" . 
                  "<img src=\"".sanitized_url()."dl=git_logo\" style=\"border-width: 0px;\"/></a>\n";
@@ -280,6 +290,7 @@
             echo "</html>\n";
         }
     }
+
 
     function git_tree_head($gitdir) {
         return git_tree($gitdir, "HEAD");
@@ -541,7 +552,8 @@
     }
 
     function html_title($text = "&nbsp;")  {
-        echo "<div class=\"gittitle\">$text</div>\n";
+        echo "<div class=\"gittitle\">$text\n";
+        echo "</div>\n";
     }
 
     function html_breadcrumbs()  {
@@ -641,6 +653,8 @@
                 margin: 0px 0px 0px 0px;
                 padding: 10px 10px 10px 10px;
                 background-color: #d9d8d1;
+                font-weight: bold;
+                font-size: 18px;
             }
 
             #gitbody th {
@@ -684,6 +698,15 @@
                 text-decoration: underline;
             }
             a.gitbrowse:hover { text-decoration:underline; color:#880000; }
+            a.rss_logo {
+                float:left; padding:3px 0px; width:35px; line-height:10px;
+                    margin: 2px 5px 5px 5px;
+                    border:1px solid; border-color:#fcc7a5 #7d3302 #3e1a01 #ff954e;
+                    color:#ffffff; background-color:#ff6600;
+                    font-weight:bold; font-family:sans-serif; font-size:10px;
+                    text-align:center; text-decoration:none;
+                }
+            a.rss_logo:hover { background-color:#ee5500; }
 EOF;
 
         echo "</style>\n";
