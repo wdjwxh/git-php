@@ -145,9 +145,9 @@
         echo "<div style=\"float:right;padding:7px;\">$plain</div>\n";
         exec("GIT_DIR=$repo git-cat-file blob $blob", &$out);
         echo "<div class=\"gitcode\">\n";
-        echo highlight(implode("\n", $out));
+        //echo highlight(implode("\n", $out));
         //echo highlight_code(implode("\n",$out));
-        // highlight_string(implode("\n",$out));
+         highlight_string(implode("\n",$out));
         echo "</div>\n";
     }
 
