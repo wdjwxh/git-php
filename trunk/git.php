@@ -681,7 +681,7 @@
             }
 
             #gitbody td {
-                padding: 0px 0px 0px 7px;
+                padding: 5px 0px 0px 7px;
             }
 
             tr:hover { background-color:#edece6; }
