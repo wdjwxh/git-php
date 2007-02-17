@@ -63,6 +63,7 @@
         $repos = array(
             "/home/zack/scm/bartel.git",
             "/home/zack/scm/rpminfo.git",
+            "/home/zack/scm/libshell.git",
 /*             "/home/zack/scm/cnas.git", */
 /*             "/home/zack/scm/cnas-sm.git", */
 /*             "/home/zack/scm/cnas-logos.git", */
@@ -495,7 +496,7 @@
             <language>en</language>
             <?php for ($i = 0; $i < 10 && $c; $i++): ?>
             <item>
-                <title><?php echo $c['message']?></title>
+                <title><?php echo $c['message'] ?></title>
                 <link><?php echo $link?></link>
                 <pubDate><?php echo date('D, d M Y G:i:s', $c['date'])?></pubDate>
                 <guid isPermaLink="false"><?php echo $link ?></guid>
@@ -503,6 +504,7 @@
                 <content><?php echo $c['message'] ?></content>
             </item>
             <?php $c = git_commit($repo, $c['parent']);
+                $link = "http://{$_SERVER['HTTP_HOST']}".sanitized_url()."p=$proj&amp;a=commitdiff&amp;h={$c['commit_id']}&amp;hb={$c['parent']}";
                   endfor;
             ?>
         </channel>
