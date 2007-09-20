@@ -9,7 +9,8 @@ Some people have made some cool modifications to the script.
 
 Links:
   * http://netserva.org/index.php?m=git
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * http://people.proekspert.ee/peeter/git/git.php
+  ** soon to be merged
 
+ 
  
