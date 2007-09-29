@@ -10,7 +10,7 @@ Some people have made some cool modifications to the script.
 Links:
   * http://netserva.org/index.php?m=git
   * http://people.proekspert.ee/peeter/git/git.php
-   * soon to be merged
+   * soon to be partially merged
 
  
  
