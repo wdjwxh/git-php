@@ -7,8 +7,8 @@
 // | Copyright (c) 2006 Zack Bartel                                         |
 // +------------------------------------------------------------------------+
 // | This program is free software; you can redistribute it and/or          |
-// | modify it under the terms of the GNU General Public License            |
-// | as published by the Free Software Foundation; either version 2         |
+// | modify it under the terms of the GNU General Public License            | 
+// | as published by the Free Software Foundation; either version 2         | 
 // | of the License, or (at your option) any later version.                 |
 // |                                                                        |
 // | This program is distributed in the hope that it will be useful,        |
@@ -61,18 +61,27 @@
     }
     else    
         $repos = array(
+            "/home/zack/scm/afa.git",
+            "/home/zack/scm/nurikabe.git",
+            "/home/zack/scm/sudoku.git",
             "/home/zack/scm/bartel.git",
             "/home/zack/scm/rpminfo.git",
             "/home/zack/scm/libshell.git",
+            "/home/zack/scm/pycast.git",
+            "/home/zack/scm/tectool.git",
+            "/home/zack/scm/gastrack.app.git",
+/*             "/home/zack/scm/libdb.git", */
 /*             "/home/zack/scm/cnas.git", */
 /*             "/home/zack/scm/cnas-sm.git", */
 /*             "/home/zack/scm/cnas-logos.git", */
 /*             "/home/zack/scm/cnas-release.git", */
 /*             "/home/zack/scm/cnas-aimsim.git", */
+            "/home/zack/scm/survey.git",
             "/home/zack/scm/tftp-hpa.git",
             "/home/zack/scm/git-php.git",
             "/home/zack/scm/git-drupal.git",
             "/home/zack/scm/gobot.git",
+            "/home/zack/scm/zoogle.git",
             "/home/zack/scm/hello-servlet.git",
         );
 
@@ -80,6 +89,11 @@
 
     if (!isset($git_embed) && $git_embed != true)
         $git_embed = false;
+
+    foreach ($_GET as $var=>$val)
+    {
+        $_GET[$var] = str_replace(";", "", $_GET[$var]);
+    }
 
     if (isset($_GET['dl']))
         if ($_GET['dl'] == 'targz') 
@@ -148,7 +162,8 @@
         echo "<div class=\"gitcode\">\n";
         //echo highlight(implode("\n", $out));
         //echo highlight_code(implode("\n",$out));
-         highlight_string(implode("\n",$out));
+        highlight_string(implode("\n",$out));
+        //echo pretty_code(implode("\n", $out));
         echo "</div>\n";
     }
 
@@ -237,8 +252,10 @@
             echo "<head>\n";
             echo "\t<title>$title</title>\n";
             echo "\t<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\"/>\n";
+            echo "\t<link href=\"prettify.css\" type=\"text/css\" rel=\"stylesheet\" />\n";
+            echo "\t<script type=\"text/javascript\" src=\"prettify.js\"></script>\n";
             echo "</head>\n";
-            echo "<body>\n";
+            echo "<body onload=\"prettyPrint()\">\n";
         }
         /* Add rss2 link */
         if (isset($_GET['p']))  {
@@ -581,6 +598,12 @@
 
     function zpr ($arr) {
         print "<pre>" .print_r($arr, true). "</pre>";
+    }
+
+    function pretty_code($code) {
+        echo "<code class=\"prettyprint\">\n";
+        echo $code;
+        echo "</code>\n";
     }
 
     function highlight($code) {
